@@ -1,5 +1,6 @@
 //Написать приложение для ввода ФИО, возраста и пола пользователей. Данные хранить в разных списках.
 //Добавить методы для сортировки пользователей по возрасту полу и первой букве фамилии.
+//*Добавить возможность одновременной сортировки по двум параметрам.
 package Seminar4;
 
 import java.util.ArrayList;
@@ -9,6 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class task1 {
+    public static void sortFIOage(ArrayList<List<String>> db){
+        db.sort(Comparator.comparing(x -> x, (row1, row2) -> {
+            int fioRes = row1.get(0).charAt(0) - row2.get(0).charAt(0);
+            if(fioRes == 0) {
+                return Integer.parseInt(row1.get(1)) - Integer.parseInt(row2.get(1));
+            }
+            return fioRes;
+        }));
+
+    }
     public static void sortByAge(ArrayList<List<String>> db){
         db.sort(Comparator.comparing(x -> Integer.parseInt(x.get(1))));
 
@@ -42,7 +53,7 @@ public class task1 {
         Scanner sc = new Scanner(System.in);
         ArrayList<List<String>> db = new ArrayList<List<String>>();
         while(true) {
-            System.out.print("Выберите команду:\n1 - ввести пользователя\n2 - вывести базу пользователей\n3 - выйти\n4 - сортировка по ФИО\n5 - сортировка по возрасту\n6 - сортировка по полу\n");
+            System.out.print("Выберите команду:\n1 - ввести пользователя\n2 - вывести базу пользователей\n3 - выйти\n4 - сортировка по ФИО\n5 - сортировка по возрасту\n6 - сортировка по полу\n7 - сортировка по ФИО и возрасту\n");
             String command = sc.nextLine().trim();
 
             if(command.equals("1")){
@@ -64,6 +75,10 @@ public class task1 {
             }
             else if(command.equals("6")){
                 sortBySex(db);
+                printDB(db);
+            }
+            else if(command.equals("7")){
+                sortFIOage(db);
                 printDB(db);
             }
         }

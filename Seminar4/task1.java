@@ -1,6 +1,7 @@
 //Написать приложение для ввода ФИО, возраста и пола пользователей. Данные хранить в разных списках.
 //Добавить методы для сортировки пользователей по возрасту полу и первой букве фамилии.
 //*Добавить возможность одновременной сортировки по двум параметрам.
+//**Добавить возможность одновременной сортировки по трём параметрам.
 package Seminar4;
 
 import java.util.ArrayList;
@@ -15,6 +16,21 @@ public class task1 {
             int fioRes = row1.get(0).charAt(0) - row2.get(0).charAt(0);
             if(fioRes == 0) {
                 return Integer.parseInt(row1.get(1)) - Integer.parseInt(row2.get(1));
+            }
+            return fioRes;
+        }));
+
+    }
+    public static void sortFIOageSex(ArrayList<List<String>> db){
+        db.sort(Comparator.comparing(x -> x, (row1, row2) -> {
+            int fioRes = row1.get(0).charAt(0) - row2.get(0).charAt(0);
+            if(fioRes == 0) {
+
+                int ageRes = Integer.parseInt(row1.get(1)) - Integer.parseInt(row2.get(1));
+                if(ageRes == 0) {
+                    return row1.get(2).compareTo(row2.get(2));
+                }
+                return ageRes;
             }
             return fioRes;
         }));
@@ -53,7 +69,7 @@ public class task1 {
         Scanner sc = new Scanner(System.in);
         ArrayList<List<String>> db = new ArrayList<List<String>>();
         while(true) {
-            System.out.print("Выберите команду:\n1 - ввести пользователя\n2 - вывести базу пользователей\n3 - выйти\n4 - сортировка по ФИО\n5 - сортировка по возрасту\n6 - сортировка по полу\n7 - сортировка по ФИО и возрасту\n");
+            System.out.print("Выберите команду:\n1 - ввести пользователя\n2 - вывести базу пользователей\n3 - выйти\n4 - сортировка по ФИО\n5 - сортировка по возрасту\n6 - сортировка по полу\n7 - сортировка по ФИО и возрасту\n8 - сортировка по ФИО, возрасту, полу\n");
             String command = sc.nextLine().trim();
 
             if(command.equals("1")){
@@ -79,6 +95,10 @@ public class task1 {
             }
             else if(command.equals("7")){
                 sortFIOage(db);
+                printDB(db);
+            }
+            else if(command.equals("8")){
+                sortFIOageSex(db);
                 printDB(db);
             }
         }

@@ -12,6 +12,7 @@ import java.util.TreeSet;
 //Отсортированный результат сохранить в LinkedHashSet
 //Создать TreeSet с компаратором.
 //Скопировать содержимое первого множества (HashSet) в TreeSet.
+//*Скорректировать компаратор так, чтобы поля хранились в обратном порядке.
 public class task1 {
     public static void main(String[] args) {
         HashSet<String> set = new HashSet<>();
@@ -35,7 +36,9 @@ public class task1 {
             sorted.add(s);
         }
         System.out.println(sorted);
-        TreeSet<String> ts = new TreeSet<>(Comparator.comparing(x -> Integer.parseInt(x.split(" ")[3])));
+        TreeSet<String> ts = new TreeSet<>(Comparator.comparing(x -> Integer.parseInt(x.split(" ")[3]), (v1,v2) -> {
+            return v2 - v1;
+        }));
      
         // Добавляем элементы к набору древ
         ts.addAll(sorted);
